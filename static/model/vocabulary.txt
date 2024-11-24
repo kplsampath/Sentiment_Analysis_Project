@@ -761,7 +761,6 @@ unbox
 wow
 sonyphoto
 top
-danc
 phonecas
 june
 sad
@@ -874,7 +873,6 @@ almost
 cousin
 tag
 applesuck
-everyday
 bye
 search
 dinner
@@ -1016,6 +1014,7 @@ decid
 radio
 loud
 self
+danc
 current
 ok
 septemb
