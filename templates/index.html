@@ -4,15 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <Link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}"></Link>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>App</title>
+    <!-- Link to custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <!-- Link to Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+          crossorigin="anonymous">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <title>Sentiment Analysis App</title>
 </head>
 <body>
- 
     <div class="split left">
         <div class="centered">
-            <img src="../static/products/prod1.jpg" alt="">
+            <!-- Corrected image path using url_for -->
+            <img src="{{ url_for('static', filename='products/prod1.jpg') }}" alt="Product Image">
         </div>
     </div>
      
@@ -20,26 +26,27 @@
         <div class="container mt-5 mb-5">
             <div class="d-flex justify-content-center row">
                 <div class="d-flex flex-column col-md-8">
+                    <!-- Display positive and negative reviews count -->
                     <div>
-                        <label for="">Positive Reviews: {{ data.positive }}</label>
+                        <label>Positive Reviews: {{ data.positive }}</label>
                     </div>
                     <div>
-                        <label for="">Negative Reviews: {{ data.negative }}</label>
+                        <label>Negative Reviews: {{ data.negative }}</label>
                     </div>
+                    <!-- Form for submitting new reviews -->
                     <div>
                         <form method="post">
-                            <textarea name="text"></textarea>
-                            <input type="submit">
+                            <textarea name="text" placeholder="Write your review here..." required></textarea>
+                            <button type="submit" class="btn btn-primary mt-2">Submit</button>
                         </form>
                     </div>
                     
+                    <!-- Displaying reviews -->
                     <div class="comment-bottom bg-white p-2 px-4">
                         {% for review in data.reviews %}
                         <hr/>
                         <div>
                             <div class="commented-section mt-2">
-                                <div class="d-flex flex-row align-items-center commented-user">
-                                </div>
                                 <div class="text-nowrap bd-highlight">
                                     <span>{{ review }}</span>
                                 </div>
@@ -53,7 +60,5 @@
             </div>
         </div>
     </div>
-    
-
 </body>
 </html>
