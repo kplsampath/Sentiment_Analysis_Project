@@ -1,52 +1,50 @@
 from flask import Flask, render_template,request, redirect
 from helper import preprocessing, vectorizer, get_prediction
+from logger import logging
 
 app = Flask(__name__)
 
+logging.info('Flask server started')
+
 data = dict()
-#reviews = ['i love this product ' , 'Bad product' , 'i like it']
 reviews = []
 positive = 0
 negative = 0
-
 
 @app.route("/")
 def index():
     data['reviews'] = reviews
     data['positive'] = positive
     data['negative'] = negative
-    return render_template('index.html' , data=data)
-    
-    
- # Define a route for the root URL and allow only POST requests
-@app.route("/", methods=['POST'])
+
+    logging.info('========== Open home page ============')
+
+    return render_template('index.html', data=data)
+
+@app.route("/", methods = ['post'])
 def my_post():
-    # Extract the 'text' field from the form data submitted with the POST request
     text = request.form['text']
-    
-    # Preprocess the input text (e.g., clean, tokenize, remove stop words)
+    logging.info(f'Text : {text}')
+
     preprocessed_txt = preprocessing(text)
-    
-    # Convert the preprocessed text into a numerical vector  
+    logging.info(f'Preprocessed Text : {preprocessed_txt}')
+
     vectorized_txt = vectorizer(preprocessed_txt)
-    
-    # Use the vectorized text to get a prediction  
+    logging.info(f'Vectorized Text : {vectorized_txt}')
+
     prediction = get_prediction(vectorized_txt)
-    
-    # Initialize counters for negative and positive predictions (if not already initialized)
-    global negative, positive
-    if prediction == 'negative':  # Check if the prediction indicates negative sentiment
+    logging.info(f'Prediction : {prediction}')
+
+    if prediction == 'negative':
         global negative
-        negative += 1  # Increment the negative counter
-    else:  # Otherwise, assume the sentiment is positive
+        negative += 1
+    else:
         global positive
-        positive += 1  # Increment the positive counter
+        positive += 1
     
-    # Add the original text to the beginning of the 'reviews' list for display or logging
-    reviews.insert(0, text)   
+    reviews.insert(0, text)
     return redirect(request.url)
-
-
 
 if __name__ == "__main__":
     app.run()
+    
